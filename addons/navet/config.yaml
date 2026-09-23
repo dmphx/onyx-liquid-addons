@@ -1,0 +1,28 @@
+name: Onyx Liquid
+version: "0.1.0-liquid.11"
+slug: onyx-liquid
+description: Liquid Glass restyle of Navet — Onyx smart home dashboard
+url: https://github.com/dmphx/onyx-liquid-addons
+image: git.onyx-platform.com/dmphx/{arch}-onyx-liquid-addon
+arch:
+  - amd64
+startup: application
+init: false
+ingress: true
+ingress_port: 8099
+ports:
+  8099/tcp: 8099
+ports_description:
+  8099/tcp: Direct Onyx Liquid dashboard access
+panel_icon: mdi:hexagon-multiple-outline
+panel_title: Onyx Liquid
+map:
+  - addon_config:rw
+options:
+  hass_url: ""
+  token: ""
+  dashboard_config_url: ""
+schema:
+  hass_url: str?
+  token: password?
+  dashboard_config_url: str?
