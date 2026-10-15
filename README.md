@@ -14,17 +14,25 @@ This repository gives Home Assistant a metadata entry point for the private Onyx
 
 **Who it is for:** A focused utility or experimental repository, with its technical reference available for the people using or maintaining it.
 
+![onyx-liquid-addons product showcase. Existing captures and artwork are identified in the composition.](docs/readme/showcase.png)
+
 ## What the experience brings
 
 ### Understand the entry
+
+![Illustrated feature: Understand the entry.](docs/readme/feature-1.png)
 
 Read the repository metadata and add-on description.
 
 ### Use the guide
 
+![Illustrated feature: Use the guide.](docs/readme/feature-2.png)
+
 Follow the add-on’s README for the documented setup and behavior.
 
 ### Check what changed
+
+![Illustrated feature: Check what changed.](docs/readme/feature-3.png)
 
 Use the add-on changelog as the versioned record.
 
@@ -45,6 +53,8 @@ A focused utility keeps its input, controls, and result understandable. The tech
 
 Use the versioned source and technical reference for current behavior and setup. Installation and operating details stay close to the source.
 
+
+![Explore onyx-liquid-addons and its maintained product guides.](docs/readme/next.png)
 
 ## Explore further
 
