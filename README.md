@@ -1,7 +1,4 @@
-<picture>
-  <source media="(max-width: 600px)" srcset="docs/readme/hero-mobile.png">
-  <img src="docs/readme/hero.png" alt="Onyx Liquid Add-ons: A SMALL INDEX. A CLEAR STARTING POINT. The public Home Assistant add-on metadata index for the private Onyx Liquid image." width="100%">
-</picture>
+![Onyx Liquid Add-ons: A SMALL INDEX. A CLEAR STARTING POINT. The public Home Assistant add-on metadata index for the private Onyx Liquid image.](docs/readme/hero.png)
 
 # Onyx Liquid Add-ons
 
@@ -33,10 +30,7 @@ Use the add-on changelog as the versioned record.
 
 ## From the first step to the next one
 
-<picture>
-  <source media="(max-width: 600px)" srcset="docs/readme/workflow-mobile.png">
-  <img src="docs/readme/workflow.png" alt="Workflow: INDEX → ADD-ON → GUIDE → CHANGELOG" width="100%">
-</picture>
+![Workflow: INDEX → ADD-ON → GUIDE → CHANGELOG](docs/readme/workflow.png)
 
 1. **Index.** Read the repository metadata and add-on description.
 2. **Add-On.** Follow the add-on’s README for the documented setup and behavior.
