@@ -54,5 +54,6 @@ Use the versioned source and technical reference for current behavior and setup.
 
 ## Explore further
 
+- [Documentation wiki](https://github.com/dmphx/onyx-liquid-addons/wiki)
 - [Add-on guide](addons/navet/README.md)
 - [Changelog](addons/navet/CHANGELOG.md)
