@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Onyx Liquid — illustrative dashboard</title>
+  <style>
+    /* Static artwork. All displayed content is fictional; no application connections. */
+    * { box-sizing: border-box; }
+    :root { color-scheme: dark; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    body { margin: 0; background: #101316; color: #f4f5f5; }
+    .artwork { position: relative; width: 1200px; min-height: 920px; overflow: hidden; padding: 46px 48px 28px; isolation: isolate; }
+    .artwork::before { content: ""; position: absolute; inset: 0; z-index: -2; background: radial-gradient(ellipse at 91% 38%, #34555782, transparent 55%), radial-gradient(ellipse at 12% 76%, #99593761, transparent 58%), linear-gradient(130deg, #11171c, #161b21 48%, #101719); }
+    .artwork::after { content: ""; position: absolute; z-index: -1; left: -200px; bottom: -270px; width: 1050px; height: 600px; border-radius: 50%; border: 80px solid #d5965d12; transform: rotate(-25deg); filter: blur(22px); }
+    .mast { display: flex; align-items: center; justify-content: space-between; margin-bottom: 26px; }
+    .wordmark { display: flex; align-items: center; gap: 12px; font-size: 17px; font-weight: 650; letter-spacing: -.35px; }
+    .wordmark img { width: 32px; height: 32px; border-radius: 9px; }
+    .edition { color: #c9cece; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }
+    .intro { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 30px; }
+    .intro h1 { margin: 0; font-size: 42px; line-height: 1.14; font-weight: 550; letter-spacing: -1.7px; }
+    .intro p { color: #bac3c5; font-size: 14px; line-height: 1.6; width: 290px; margin: 0 0 2px; }
+    .window { display: flex; min-height: 636px; border: 1px solid #ffffff32; border-radius: 27px; overflow: hidden; background: linear-gradient(130deg, #ffffff0a, #ffffff02), #161c2391; box-shadow: 0 40px 80px #0005, inset 0 1px 0 #ffffff13; backdrop-filter: blur(25px); }
+    .sidebar { width: 74px; flex: 0 0 74px; border-right: 1px solid #ffffff12; display: flex; align-items: center; flex-direction: column; padding: 22px 0; gap: 15px; background: #ffffff04; }
+    .sidebar .nav-item { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 14px; color: #a1adb7; }
+    .sidebar .nav-item.active { color: #f8d5af; background: linear-gradient(145deg, #ffc58832, #d2956620); border: 1px solid #ffd6ab3b; box-shadow: inset 0 1px 0 #ffe2c222; }
+    .sidebar .bottom { margin-top: auto; }
+    svg.icon { width: 21px; height: 21px; display: inline-block; fill: none; stroke: currentColor; stroke-width: 1.65; stroke-linecap: round; stroke-linejoin: round; flex-shrink: 0; }
+    .main { flex: 1; min-width: 0; padding: 28px 30px; }
+    .topline { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 25px; }
+    .eyebrow { font-size: 10px; letter-spacing: 1.7px; text-transform: uppercase; color: #b6c1c8; margin: 0 0 8px; }
+    h2 { font-size: 28px; font-weight: 540; letter-spacing: -.8px; margin: 0; }
+    .weather { display: flex; align-items: center; gap: 10px; color: #dbe0e3; padding-top: 4px; }
+    .weather .icon { color: #eed3a4; width: 30px; height: 30px; }
+    .weather strong { font-size: 22px; font-weight: 500; }
+    .weather span { font-size: 11px; color: #acbac2; display: block; margin-top: 3px; }
+    .rooms { display: flex; gap: 9px; margin-bottom: 24px; }
+    .room { border: 1px solid #ffffff16; background: #ffffff05; border-radius: 22px; padding: 10px 17px; color: #b8c4cb; font-size: 12px; }
+    .room.selected { background: #e4ded2; color: #252a2d; border-color: #f6f2e6; font-weight: 650; box-shadow: 0 3px 13px #0002; }
+    .grid { display: grid; grid-template-columns: 1.02fr 1.08fr 1fr; gap: 15px; }
+    .glass { position: relative; overflow: hidden; border: 1px solid #ffffff24; border-radius: 22px; background: linear-gradient(135deg, #ffffff10, #ffffff04); box-shadow: inset 0 1px 0 #ffffff10, 0 8px 22px #00000012; }
+    .card-head { display: flex; align-items: center; justify-content: space-between; color: #e7edf0; font-size: 13px; font-weight: 550; }
+    .card-head .label { display: flex; align-items: center; gap: 9px; }
+    .card-head .icon { width: 18px; height: 18px; color: #d1dbe0; }
+    .dots { color: #a0adb5; font-size: 17px; letter-spacing: 2px; line-height: 1; }
+    .climate { grid-row: span 2; padding: 20px 20px 17px; background: radial-gradient(ellipse at 45% 57%, #dbab6a14, transparent 65%), linear-gradient(140deg, #ffffff13, #ffffff04); }
+    .subtle { color: #aebbc3; font-size: 11px; }
+    .climate .subtle { margin-top: 8px; }
+    .dial { width: 198px; height: 198px; margin: 27px auto 12px; position: relative; display: grid; place-items: center; }
+    .dial svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .dial .reading { text-align: center; margin-top: 4px; }
+    .dial strong { font-size: 59px; font-weight: 300; letter-spacing: -4px; display: block; }
+    .dial strong sup { font-size: 25px; vertical-align: top; display: inline-block; padding-top: 10px; letter-spacing: -.5px; }
+    .dial .reading span { display: block; font-size: 10px; color: #cbd3d7; margin-top: 3px; }
+    .temperature { display: flex; align-items: center; justify-content: space-between; padding: 0 13px; margin-top: 2px; }
+    .temperature .control { display: grid; place-items: center; border: 1px solid #ffffff25; width: 32px; height: 32px; border-radius: 50%; background: #ffffff07; color: #c9d1d5; font-size: 20px; }
+    .temperature span { font-size: 11px; color: #c3cdd2; }
+    .climate-foot { display: flex; justify-content: space-between; margin-top: 30px; padding-top: 15px; border-top: 1px solid #ffffff15; font-size: 10px; color: #b5c3ca; }
+    .climate-foot b { color: #e7d0af; font-weight: 550; }
+    .lights { padding: 19px; min-height: 189px; }
+    .light-row { display: flex; align-items: center; justify-content: space-between; margin: 21px 0 17px; }
+    .device { font-size: 12px; font-weight: 550; }
+    .device small { display: block; font-size: 10px; font-weight: 400; color: #b4bfc5; margin-top: 6px; }
+    .switch { width: 35px; height: 21px; border-radius: 20px; border: 1px solid #ffffff23; position: relative; background: #f0c48d; }
+    .switch::after { content: ""; width: 15px; height: 15px; position: absolute; top: 2px; right: 2px; border-radius: 50%; background: #f7f3ec; box-shadow: 0 2px 3px #0003; }
+    .slider { height: 5px; border-radius: 5px; background: #ffffff12; position: relative; margin-top: 5px; }
+    .slider::before { content: ""; display: block; width: 65%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #b2865c, #f2cc96); }
+    .slider::after { content: ""; position: absolute; left: 65%; top: -3px; width: 11px; height: 11px; border-radius: 50%; background: #f7dfb6; box-shadow: 0 0 11px #f1b67438; }
+    .slider-label { display: flex; justify-content: space-between; color: #aebbc2; font-size: 10px; margin-top: 10px; }
+    .media { padding: 19px; min-height: 189px; background: radial-gradient(ellipse at 100% 0, #4f9a9822, transparent 80%), linear-gradient(135deg, #ffffff11, #ffffff05); }
+    .track { display: flex; align-items: center; gap: 11px; margin: 20px 0 18px; }
+    .album { width: 49px; height: 49px; border-radius: 11px; flex-shrink: 0; position: relative; overflow: hidden; background: linear-gradient(145deg, #b7c9ba, #617d7c 48%, #263d48); box-shadow: inset 0 0 0 1px #ffffff1c; }
+    .album::before { content: ""; position: absolute; width: 60px; height: 60px; border: 1px solid #d2e8d870; border-radius: 50%; left: 12px; top: 7px; box-shadow: 0 0 0 9px #dcebd317, 0 0 0 18px #dcebd30b; }
+    .track strong { font-size: 12px; font-weight: 550; }
+    .track small { display: block; margin-top: 6px; font-size: 10px; color: #b5c3c9; }
+    .transport { display: flex; align-items: center; justify-content: center; gap: 24px; color: #d8e0e1; }
+    .transport .icon { width: 17px; height: 17px; }
+    .play { width: 31px; height: 31px; border-radius: 50%; background: #d9e5df; color: #243237; display: grid; place-items: center; }
+    .secondary { padding: 18px 19px; min-height: 183px; }
+    .small-device { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; }
+    .small-device + .small-device { border-top: 1px solid #ffffff12; }
+    .device-icon { width: 32px; height: 32px; display: grid; place-items: center; color: #e7c59b; border: 1px solid #ffcf9a19; border-radius: 11px; background: #ffc17c0d; }
+    .device-icon .icon { width: 18px; height: 18px; }
+    .device-info { display: flex; gap: 10px; align-items: center; }
+    .small-device .device { font-size: 11px; }
+    .small-device .device small { font-size: 9px; margin-top: 4px; }
+    .switch.off { background: #ffffff13; }
+    .switch.off::after { left: 2px; right: auto; background: #aebbc3; }
+    .scenes { padding: 19px; }
+    .scene-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; }
+    .scene { display: flex; align-items: center; gap: 7px; font-size: 10px; border: 1px solid #ffffff1b; border-radius: 11px; padding: 10px 11px; color: #cbd5d9; background: #ffffff04; }
+    .scene .icon { width: 15px; height: 15px; }
+    .scene.active { border-color: #f9c88d40; color: #f1d4b3; background: #c8945220; }
+    .window-foot { display: flex; align-items: center; gap: 6px; margin-top: 22px; font-size: 10px; color: #b0bcc3; }
+    .window-foot .dot { width: 5px; height: 5px; background: #adc3b3; border-radius: 50%; }
+    .caption { display: flex; align-items: center; justify-content: space-between; margin-top: 25px; color: #b7c0c3; font-size: 10px; letter-spacing: .3px; }
+    .caption strong { color: #e0d8c9; font-size: 9px; letter-spacing: 1.3px; font-weight: 500; text-transform: uppercase; }
+    @media (max-width: 700px) {
+      .artwork { width: 100%; min-height: 0; padding: 24px 18px 20px; }
+      .mast { margin-bottom: 23px; }
+      .edition { font-size: 7px; letter-spacing: 1px; }
+      .wordmark { font-size: 14px; gap: 8px; }
+      .wordmark img { width: 27px; height: 27px; }
+      .intro { display: block; margin-bottom: 23px; }
+      .intro h1 { font-size: 34px; letter-spacing: -1.4px; }
+      .intro p { width: auto; font-size: 12px; margin-top: 12px; max-width: 280px; }
+      .window { border-radius: 20px; }
+      .sidebar { display: none; }
+      .main { padding: 20px 15px; }
+      h2 { font-size: 23px; }
+      .eyebrow { font-size: 8px; }
+      .weather { gap: 6px; }
+      .weather .icon { width: 23px; }
+      .weather strong { font-size: 18px; }
+      .weather span { font-size: 9px; }
+      .rooms { gap: 6px; flex-wrap: wrap; }
+      .room { font-size: 10px; padding: 8px 10px; }
+      .grid { grid-template-columns: 1fr; gap: 12px; }
+      .climate { grid-row: auto; padding: 19px; }
+      .dial { width: 180px; height: 180px; margin: 14px auto 4px; }
+      .temperature { max-width: 220px; margin: auto; }
+      .climate-foot { margin-top: 18px; }
+      .lights, .media, .secondary { min-height: 0; }
+      .scene-list { margin-bottom: 4px; }
+      .caption { display: block; font-size: 9px; line-height: 1.7; margin-top: 17px; }
+      .caption strong { display: block; margin-bottom: 5px; }
+    }
+  </style>
+</head>
+<body>
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="home" viewBox="0 0 24 24"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1Z"/></symbol>
+      <symbol id="bulb" viewBox="0 0 24 24"><path d="M8 16c0-3-3-4-3-8a7 7 0 0 1 14 0c0 4-3 5-3 8M8 17h8M9 20h6M11 22h2"/></symbol>
+      <symbol id="thermometer" viewBox="0 0 24 24"><path d="M9 14V5a3 3 0 0 1 6 0v9a5 5 0 1 1-6 0Z"/><path d="M12 6v11m-1 2h2"/></symbol>
+      <symbol id="music" viewBox="0 0 24 24"><path d="M9 18V5l11-2v13M9 8l11-2"/><ellipse cx="6" cy="18" rx="3" ry="3"/><ellipse cx="17" cy="16" rx="3" ry="3"/></symbol>
+      <symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></symbol>
+      <symbol id="moon" viewBox="0 0 24 24"><path d="M20 14A9 9 0 0 1 10 4a9 9 0 1 0 10 10Z"/></symbol>
+      <symbol id="lamp" viewBox="0 0 24 24"><path d="M8 3h8l4 10H4Zm4 10v8m-5 0h10"/></symbol>
+      <symbol id="book" viewBox="0 0 24 24"><path d="M12 5c-3-2-6-2-9-1v16c3-1 6-1 9 1 3-2 6-2 9-1V4c-3-1-6-1-9 1Zm0 0v16"/></symbol>
+      <symbol id="grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></symbol>
+      <symbol id="adjust" viewBox="0 0 24 24"><path d="M5 3v8m0 4v6m7-18v3m0 4v11m7-18v11m0 4v3M2 11h6m1-5h6m1 8h6"/></symbol>
+      <symbol id="previous" viewBox="0 0 24 24"><path d="M5 5v14m14-14L8 12l11 7Z"/></symbol>
+      <symbol id="next" viewBox="0 0 24 24"><path d="M19 5v14M5 5l11 7-11 7Z"/></symbol>
+      <symbol id="pause" viewBox="0 0 24 24"><path d="M9 6v12m6-12v12" stroke-width="3"/></symbol>
+    </defs>
+  </svg>
+  <article class="artwork" aria-label="Illustrative Onyx Liquid dashboard, using entirely fictional data">
+    <header class="mast">
+      <div class="wordmark"><img src="../../addons/navet/icon.png" alt="">Onyx Liquid</div>
+      <div class="edition">Home Assistant · Navet</div>
+    </header>
+    <section class="intro">
+      <h1>Your home.<br>A softer kind of control.</h1>
+      <p>A glass-inspired dashboard for the things you use every day.</p>
+    </section>
+    <div class="window">
+      <aside class="sidebar" aria-hidden="true">
+        <span class="nav-item active"><svg class="icon"><use href="#home"/></svg></span>
+        <span class="nav-item"><svg class="icon"><use href="#bulb"/></svg></span>
+        <span class="nav-item"><svg class="icon"><use href="#thermometer"/></svg></span>
+        <span class="nav-item"><svg class="icon"><use href="#music"/></svg></span>
+        <span class="nav-item"><svg class="icon"><use href="#grid"/></svg></span>
+        <span class="nav-item bottom"><svg class="icon"><use href="#adjust"/></svg></span>
+      </aside>
+      <main class="main">
+        <header class="topline">
+          <div><p class="eyebrow">Example home</p><h2>Good evening.</h2></div>
+          <div class="weather"><svg class="icon"><use href="#sun"/></svg><div><strong>74°</strong><span>Clear skies</span></div></div>
+        </header>
+        <div class="rooms"><span class="room selected">Overview</span><span class="room">Living room</span><span class="room">Kitchen</span><span class="room">Office</span></div>
+        <div class="grid">
+          <section class="glass climate">
+            <div class="card-head"><span class="label"><svg class="icon"><use href="#thermometer"/></svg>Climate</span><span class="dots">···</span></div>
+            <div class="subtle">Living room</div>
+            <div class="dial">
+              <svg viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="warm"><stop stop-color="#916c4c"/><stop offset="1" stop-color="#f7d6a6"/></linearGradient></defs><path d="M44 160a82 82 0 1 1 112 0" fill="none" stroke="#ffffff13" stroke-width="6" stroke-linecap="round"/><path d="M44 160a82 82 0 1 1 136-80" fill="none" stroke="url(#warm)" stroke-width="6" stroke-linecap="round"/><circle cx="180" cy="80" r="6" fill="#f9dcb1"/><circle cx="100" cy="100" r="68" fill="none" stroke="#ffffff08"/></svg>
+              <div class="reading"><strong>72<sup>°</sup></strong><span>Target temperature · °F</span></div>
+            </div>
+            <div class="temperature"><span class="control">−</span><span>Currently 71°</span><span class="control">+</span></div>
+            <div class="climate-foot"><span>Mode <b>Auto</b></span><span>Humidity <b>42%</b></span></div>
+          </section>
+          <section class="glass lights">
+            <div class="card-head"><span class="label"><svg class="icon"><use href="#bulb"/></svg>Lighting</span><span class="dots">···</span></div>
+            <div class="light-row"><div class="device">Ceiling lights<small>Living room · Warm white</small></div><span class="switch"></span></div>
+            <div class="slider"></div><div class="slider-label"><span>Brightness</span><span>65%</span></div>
+          </section>
+          <section class="glass media">
+            <div class="card-head"><span class="label"><svg class="icon"><use href="#music"/></svg>Now playing</span><span class="dots">···</span></div>
+            <div class="track"><div class="album"></div><div><strong>Evening waves</strong><small>Sample mix · Living room</small></div></div>
+            <div class="transport"><svg class="icon"><use href="#previous"/></svg><span class="play"><svg class="icon"><use href="#pause"/></svg></span><svg class="icon"><use href="#next"/></svg></div>
+          </section>
+          <section class="glass secondary">
+            <div class="card-head"><span class="label">Around the house</span><span class="dots">···</span></div>
+            <div class="small-device"><div class="device-info"><span class="device-icon"><svg class="icon"><use href="#lamp"/></svg></span><div class="device">Floor lamp<small>Living room · On</small></div></div><span class="switch"></span></div>
+            <div class="small-device"><div class="device-info"><span class="device-icon"><svg class="icon"><use href="#lamp"/></svg></span><div class="device">Desk lamp<small>Office · Off</small></div></div><span class="switch off"></span></div>
+          </section>
+          <section class="glass scenes">
+            <div class="card-head"><span class="label"><svg class="icon"><use href="#grid"/></svg>Scenes</span><span class="dots">···</span></div>
+            <div class="scene-list"><span class="scene active"><svg class="icon"><use href="#moon"/></svg>Evening</span><span class="scene"><svg class="icon"><use href="#book"/></svg>Reading</span><span class="scene"><svg class="icon"><use href="#sun"/></svg>Morning</span></div>
+          </section>
+        </div>
+        <div class="window-foot"><span class="dot"></span>Example home · Fictional devices and readings</div>
+      </main>
+    </div>
+    <footer class="caption"><strong>Illustrative render · Fictional data</strong><span>Design illustration, not a connected home.</span></footer>
+  </article>
+</body>
+</html>

@@ -1,63 +1,48 @@
-![Onyx Liquid Add-ons: A SMALL INDEX. A CLEAR STARTING POINT. The public Home Assistant add-on metadata index for the private Onyx Liquid image.](docs/readme/hero.png)
+# Onyx Liquid
 
-# Onyx Liquid Add-ons
+**A Liquid Glass take on the Home Assistant dashboard.**
 
-The public Home Assistant add-on metadata index for the private Onyx Liquid image.
+Onyx Liquid is a custom version of **Navet**, with translucent panels, soft highlights,
+and a dashboard you can arrange around your home. It runs as a Home Assistant add-on
+and opens from the **Onyx Liquid** sidebar panel.
 
-**Public metadata · private image.**
+![Illustrative Onyx Liquid dashboard with fictional living room, kitchen, and office devices, example lighting controls, climate readings, and media.](docs/readme/dashboard-demo.png)
 
-[Add-on guide](addons/navet/README.md) · [Changelog](addons/navet/CHANGELOG.md)
+*Illustrative render with fictional rooms, devices, readings, and media. This is a
+design illustration, not a screenshot of a connected home.*
 
-## A public index with a specific job
+## Make it your dashboard
 
-This repository gives Home Assistant a metadata entry point for the private Onyx Liquid add-on image. It is an index and a place to read the add-on’s documentation, not the image source or a public grant of access to the private registry.
+- **Open it inside Home Assistant.** The add-on uses Home Assistant Ingress, so the
+  dashboard is available from the sidebar.
+- **Start with your own layout.** Set up Navet in the interface, or import a Navet
+  dashboard YAML export on first launch in a fresh browser.
+- **Keep your layout across browsers.** Dashboard changes are saved in the add-on's
+  data directory and shared with other browsers using the same instance.
 
-**Who it is for:** A focused utility or experimental repository, with its technical reference available for the people using or maintaining it.
+## What this repository provides
 
-![onyx-liquid-addons product showcase. Existing captures and artwork are identified in the composition.](docs/readme/showcase.png)
+This is the public **add-on catalog and documentation** for Onyx Liquid. It gives
+Home Assistant the name, version, image location, and configuration schema needed
+to list the add-on.
 
-## What the experience brings
+The application is delivered as a prebuilt image in a **private Gitea registry**.
+Application source, build files, and private household configuration are not
+published here.
 
-### Understand the entry
+## Installation and access
 
-![Illustrated feature: Understand the entry.](docs/readme/feature-1.png)
+You need **Home Assistant with add-on support on amd64** and **authorized access to
+the private image registry**. Adding this public repository does not grant image
+access; Home Assistant Supervisor needs an authorized registry credential to
+install or update the add-on.
 
-Read the repository metadata and add-on description.
+[![Add the Onyx Liquid repository to Home Assistant](https://my.home-assistant.io/badges/supervisor_add_addon_repository.svg)](https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https%3A%2F%2Fgithub.com%2Fdmphx%2Fonyx-liquid-addons)
 
-### Use the guide
+Once registry access is configured, add the repository, install **Onyx Liquid**,
+and follow the [add-on guide](addons/navet/README.md) to connect Home Assistant and
+configure your dashboard.
 
-![Illustrated feature: Use the guide.](docs/readme/feature-2.png)
+[Add-on guide](addons/navet/README.md) · [Changelog](addons/navet/CHANGELOG.md) · [Documentation wiki](https://github.com/dmphx/onyx-liquid-addons/wiki)
 
-Follow the add-on’s README for the documented setup and behavior.
-
-### Check what changed
-
-![Illustrated feature: Check what changed.](docs/readme/feature-3.png)
-
-Use the add-on changelog as the versioned record.
-
-## From the first step to the next one
-
-![Workflow: INDEX → ADD-ON → GUIDE → CHANGELOG](docs/readme/workflow.png)
-
-1. **Index.** Read the repository metadata and add-on description.
-2. **Add-On.** Follow the add-on’s README for the documented setup and behavior.
-3. **Guide.** Use the add-on changelog as the versioned record.
-4. **Changelog.** Read the preserved technical reference for the full operating details.
-
-## A focused workflow
-
-A focused utility keeps its input, controls, and result understandable. The technical reference holds installation, configuration, supported inputs, operating controls, and limitations where those are documented.
-
-## Availability
-
-Use the versioned source and technical reference for current behavior and setup. Installation and operating details stay close to the source.
-
-
-![Explore onyx-liquid-addons and its maintained product guides.](docs/readme/next.png)
-
-## Explore further
-
-- [Documentation wiki](https://github.com/dmphx/onyx-liquid-addons/wiki)
-- [Add-on guide](addons/navet/README.md)
-- [Changelog](addons/navet/CHANGELOG.md)
+Built on Navet. Packaged and styled for Onyx.
